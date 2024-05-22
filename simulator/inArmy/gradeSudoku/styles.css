@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.sudoku-container {
+    display: inline-block;
+    padding: 60px; /* 기존 20px에서 3배로 증가 */
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sudoku-board {
+    border-collapse: collapse;
+}
+
+.sudoku-board td {
+    border: 1px solid #000000;
+    width: 30px; /* 기존 10px에서 3배로 증가 */
+    height: 30px; /* 기존 10px에서 3배로 증가 */
+    padding: 0;
+}
+
+.sudoku-board input {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: none;
+    outline: none;
+    font-size: 24px; /* 기존 8px에서 3배로 증가 */
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.sudoku-board tr:nth-child(3n) td {
+    border-bottom: 2px solid #000000;
+}
+
+.sudoku-board tr td:nth-child(3n) {
+    border-right: 2px solid #000000;
+}
+
+.devDefine button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
