@@ -17,11 +17,8 @@ function gradeRow(row){
   
   for (var idx = 0; idx < 10; idx++) {
     if (numbers[idx] > 1 || numbers[idx] == 0) {
-      console.log("가로줄에서 실패 ", numbers[idx]);
-      console.log("row: ",row);
-      console.log("numbers: ",numbers.toString());
-      
-      return false;
+     console.log("가로줄에서 실패!");	
+     return false;
     }
   }
   return true;
@@ -135,12 +132,22 @@ function testSudokuSolution() {
     }
 }
 
+// 초기화 버튼 클릭 시에 스도쿠 판 초기화하기
+function initializationSudokuGrid() {
+    // 각 셀에 "" 입력 === 빈칸으로 만들기
+    for (let i = 1; i <= 9; i++) {
+        for (let j = 1; j <= 9; j++) {
+            document.getElementById("coor_" + i.toString() + "," + j.toString()).value = "";
+        }
+    }
+}
+
 // 테스트 버튼에 클릭 이벤트 리스너 추가
 document.getElementById('testBtn').addEventListener('click', testSudokuSolution);
-
+// 초기화 버튼에 이벤트 리스너 설정
+document.getElementById('initializationBtn').addEventListener('click', initializationSudokuGrid);
 
 // 채점하기 버튼 이벤트 리스너 설정
 document.getElementById('gradeBtn').addEventListener('click', function() {gradeAll()});
 
-// 각 input에 이벤트 리스너 설정
-document.getElementById('coor_1,8').addEventListener('input', function() {test('coor_1,8')});
+
