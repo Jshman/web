@@ -31,9 +31,9 @@ function tryLevelUp(levelId, maxScoreId) {
         return;
     } 
 
-    // 75% 확률로 성공
-    // 성공 -> 강화레벨 +1
-    // 실패 -> 강화레벨 0으로 초기화
+    // 90% 확률로 성공
+    // 성공 -> 레벨 +1
+    // 실패 -> 레벨 0으로 초기화
 //    let curnlvl = parseInt(currentLevel);
     let currentLevel = parseInt(currentLevelElement.innerText, 10);
     const percent = getRandomInt(0, 99);
@@ -101,8 +101,8 @@ function displayStars() {
     }
 
     setTimeout(shoot, 0);
-    setTimeout(shoot, 100);
-    setTimeout(shoot, 200);
+    setTimeout(shoot, 150);
+    setTimeout(shoot, 300);
 }
 
 
