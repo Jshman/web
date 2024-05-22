@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스도쿠 채점기</title>
     <link rel="stylesheet" href="styles.css">
+
+<!-- 폰트 적용 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="sudoku-container">
@@ -110,12 +115,13 @@
                 <td><input id="coor_9,9" type="text" maxlength="1"></td>
             </tr>
         </table>
-    </div>
-    <div class="devDefine">
+    
         <button id="gradeBtn">채점하기</button>
         <button id="testBtn">테스트</button>
         <button id="initializationBtn">초기화</button>
-        <h5 id="someTips">* tap = 오른쪽 칸으로 이동 *<br>* shift + tap = 왼쪽 칸으로 이동 *</br></h5>
+        <div class="someTips">
+                <p id="Tip">* tap = 오른쪽 칸으로 이동 <br>* shift + tap = 왼쪽 칸으로 이동 </p>
+        </div>
     </div>
 
     <script src="script.js"></script>
