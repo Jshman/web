@@ -1,0 +1,36 @@
+/* 팝업을 위한 스타일 */
+#popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 400px; /* 2배 키움 */
+    z-index: 9999; /* 다른 요소 위에 표시되도록 설정 */
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5); /* 그림자 추가 */
+}
+
+/* 닫기 버튼 스타일 */
+#closePopup {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: #333;
+}
+
+/* modal-body를 없애고 큰 문구로 변경 */
+.modal-body {
+    display: none;
+}
+
+.modal-footer {
+    display: none; /* 다른 사람의 풀이 보기 요소를 없앰 */
+}
+
+/* 배경 흐려지게 하는 스타일은 제거 */
+
