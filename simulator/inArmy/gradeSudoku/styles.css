@@ -10,7 +10,7 @@ body {
 
 .sudoku-container {
     display: inline-block;
-    padding: 60px; /* 기존 20px에서 3배로 증가 */
+    padding: 25px; /* 기존 20px에서 3배로 증가 */
     background-color: #ffffff;
     border: 2px solid #000000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -33,7 +33,7 @@ body {
     text-align: center;
     border: none;
     outline: none;
-    font-size: 24px; /* 기존 8px에서 3배로 증가 */
+    font-size: 20px;
     padding: 0;
     box-sizing: border-box;
 }
@@ -47,9 +47,16 @@ body {
 }
 
 .devDefine button {
-  padding: 10px 20px;
-  margin: 0 5px;
+  padding: 10px 10px;
+  margin: 0 0px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.someTips {
+  font-family: "Jua", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin: 10px 10px 10px 10px;
 }
