@@ -14,12 +14,8 @@ body {
 }
 
 .memorial {
-  position: absolute;
-  bottom: 30%; /* container 아래에 10px 위치 */
-  left: 50%; /* container의 가운데 정렬을 위해 50%로 설정 */
-  transform: translateX(-50%); /* 가운데 정렬 */
+    margin-top: 30px;
 }
-
 
 .control {
   margin-top: 20px;
