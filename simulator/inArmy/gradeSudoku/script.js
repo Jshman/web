@@ -98,17 +98,6 @@ function gradeAll() {
     }
 }
 
-// // 채점하기 함수
-// // 모든 셀을 순회하며 채점하는 함수
-// function grade() {
-//     for (let i = 1; i <= 9; i++) {
-//         for (let j = 1; j <= 9; j++) {
-//             const inputId = "coor_" + i + "," + j;
-//             gradeAll(inputId);
-//         }
-//     }
-// }
-
 // 좌표의 위치 추적하기 및 함수 다루기 연습
 function test(coorId) {
   const coorIdElement = document.getElementById(coorId);
