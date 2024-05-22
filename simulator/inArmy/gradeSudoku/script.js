@@ -89,6 +89,7 @@ function gradeAll() {
     }
 
     if (isValid) {
+        displayFirework();
         console.log("성공!");
     } else {
         console.log("실패! 틀린부분을 찾아서 고치세요.");
@@ -151,3 +152,37 @@ document.getElementById('initializationBtn').addEventListener('click', initializ
 document.getElementById('gradeBtn').addEventListener('click', function() {gradeAll()});
 
 
+// firework 폭죽 함수
+function displayFirework() {
+  var duration = 15 * 100;
+  var animationEnd = Date.now() + duration;
+  var defaults = { startVelocity: 25, spread: 360, ticks: 50, zIndex: 0 };
+  //  startVelocity: 범위, spread: 방향, ticks: 갯수
+
+  function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  var interval = setInterval(function () {
+    var timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+
+    var particleCount = 50 * (timeLeft / duration);
+    // since particles fall down, start a bit higher than random
+    confetti(
+      Object.assign({}, defaults, {
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+      })
+    );
+    confetti(
+      Object.assign({}, defaults, {
+        particleCount,
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+      })
+    );
+  }, 250);
+}
