@@ -1,0 +1,33 @@
+body {
+    display: flex;
+    justify-content: center;     /* 가로 기준 화면 가운데 정렬 */
+    align-items: center;         /* 세로 기준 화면 가운데 정렬 */
+    height: 80vh;
+}
+
+.piano {
+    display: flex;
+    box-sizing: border-box;
+}
+
+.key {
+    width: 48px; /* 원래 40px에서 1.2배로 키움 */
+    height: 240px; /* 원래 200px에서 1.2배로 키움 */
+    margin: -2.4px; /* 원래 -2px에서 1.2배로 조정 */
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.black {
+    background: #000000;
+    height: 120px; /* 원래 100px에서 1.2배로 키움 */
+    width: 36px; /* 원래 30px에서 1.2배로 키움 */
+    margin-left: -15.6px; /* 원래 -13px에서 1.2배로 조정 */
+    margin-right: -15.6px; /* 원래 -13px에서 1.2배로 조정 */
+    z-index: 2;
+}
+
+.white {
+    background: #FFFFFF;
+    z-index: 1;
+}
