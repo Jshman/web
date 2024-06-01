@@ -90,20 +90,6 @@ function gradeAll() {
     }
 }
 
-// 좌표의 위치 추적하기 및 함수 다루기 연습
-function test(coorId) {
-  const coorIdElement = document.getElementById(coorId);
-  
-  let tmp = coorIdElement.textContent.split("_");
-  let y = tmp[1];
-  let x = tmp[2];
-  coorIdElement.style.backgroundColor = "#ff00ff";
-  
-  console.log("현재 좌표", y,", ", x);
-  console.log("함수가 실행되었습니다.");
-
-}
-
 // 테스트 버튼 클릭 시 스도쿠 정답을 입력하는 함수
 function testSudokuSolution() {
     const sudokuSolution = [
