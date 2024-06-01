@@ -70,14 +70,6 @@ function gradeHouse(row, column) {
     return true;
 }
 
-// 주어진 ID로부터 행과 열 좌표를 추출
-function getRowAndColumn(inputId) {
-    let tmp = document.getElementById(inputId).dataset.note.split(",");
-    tmp.forEach(e => parseInt(e));
-    return tmp
-
-}
-
 // 채점하기 버튼으로 실행하는 함수
 function gradeAll() {
     let isValid = true;
