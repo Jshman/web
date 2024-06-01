@@ -72,8 +72,10 @@ function gradeHouse(row, column) {
 
 // 주어진 ID로부터 행과 열 좌표를 추출
 function getRowAndColumn(inputId) {
-    const parts = inputId.split("_")[1].split(",");
-    return [parseInt(parts[0]), parseInt(parts[1])];
+    let tmp = document.getElementById(inputId).dataset.note.split(",");
+    tmp.forEach(e => parseInt(e));
+    return tmp
+
 }
 
 // 채점하기 버튼으로 실행하는 함수
@@ -143,13 +145,79 @@ function initializationSudokuGrid() {
     }
 }
 
+function highlight(event) {
+
+    // 현재 셀의 색 변경
+    // highligt clicked cell
+    highlightClickedCell(event);
+
+    
+    // 주변 셀의 색 변경
+    // highlight around cells
+    highlightAroundCells(event);
+    
+}
+
+// 셀 클릭 시에 해당 셀 색 설정
+function highlightClickedCell(event) {
+
+    // 클릭됐었지만, 이번엔 클릭되지 않은 영역에 대해서 모두 지워주기. 암튼 이거 없으면 안 됨
+    cells.forEach((e) => {
+        e.classList.remove("clicked");
+    });
+
+    // 클릭됐다고 알려주기.
+    event.target.classList.add("clicked");
+
+}
+
+function highlightAroundCells(event) {
+    
+    const cellId = event.target.id; //string
+
+    let [row, column] = cellId.split("_")[1].split(",");
+
+    cells.forEach((e) => {
+        e.classList.remove("gradingRange");
+    });
+
+    // 현재 클릭된 셀의 행, 열, 박스를 Sky blue로 강조 표시
+    for (let i = 1; i <= 9; i++) {
+        // 행에 대한 강조 표시
+        if (i !== row) {
+            document.getElementById("coor_" + i + "," + column).classList.add("gradingRange");
+        }
+        // 열에 대한 강조 표시
+        if (i !== column) {
+            document.getElementById("coor_" + row + "," + i).classList.add("gradingRange");
+        }
+    }
+
+    // 박스에 대한 강조 표시
+    const startRow = Math.floor((row - 1) / 3) * 3 + 1;
+    const startColumn = Math.floor((column - 1) / 3) * 3 + 1;
+    for (let i = startRow; i < startRow + 3; i++) {
+        for (let j = startColumn; j < startColumn + 3; j++) {
+            if (!(i === row && j === column)) {
+                document.getElementById("coor_" + i + "," + j).classList.add("gradingRange");
+            }
+        }
+    }
+
+}
+
+
+
 // 테스트 버튼에 클릭 이벤트 리스너 추가
 document.getElementById('testBtn').addEventListener('click', testSudokuSolution);
 // 초기화 버튼에 이벤트 리스너 설정
-document.getElementById('initializationBtn').addEventListener('click', initializationSudokuGrid);
-
-// 채점하기 버튼 이벤트 리스너 설정
+document.getElementById('initializationBtn').addEventListener('click', initializationSudokuGrid);// 채점하기 버튼 이벤트 리스너 설정
 document.getElementById('gradeBtn').addEventListener('click', function() {gradeAll()});
+// 셀 클릭 리스너 추가
+// cells : querySelectorAll로 받아온 input들로 구성된 연결리스트
+const cells = document.querySelectorAll('.sudoku-board input');
+cells.forEach(cell => cell.addEventListener('click', highlight));
+
 
 
 // firework 폭죽 함수
