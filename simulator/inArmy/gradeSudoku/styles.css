@@ -67,3 +67,13 @@ body {
   justify-content: space-between;
 }
 
+
+
+.clicked {
+/* background-color : #0067A3;*/
+background-color : #6CA0DC;
+}
+
+.gradingRange {
+ background-color : #87CEEB;
+}
