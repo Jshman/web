@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #2e2e2e;
+    color: #fff;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #4CAF50;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.hand {
+    display: flex;
+    margin: 10px 0;
+}
+
+.community-cards {
+    margin: 20px 0;
+}
+
+.card {
+    width: 60px;
+    height: 90px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.card.selected {
+    background-color: #FFD700;
+}
+
+.hidden {
+    background-color: #000;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2196F3;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1976D2;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+/* 추가된 스타일 */
+#dealer-hand .card {
+    background-color: #ccc; /* 회색 배경 적용 */
+    color: #333; /* 글자색 조정 */
+}
+
+#dealer-hand .card.visible {
+    background-color: #fff; /* 공개된 카드의 배경색 */
+}

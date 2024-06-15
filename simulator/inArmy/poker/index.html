@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Five Card Draw Poker</title>
+    <link rel="stylesheet" href="poker_style.css">
+</head>
+<body>
+    <div class="table">
+        <div class="hand" id="dealer-hand">
+            <div class="card hidden"></div>
+            <div class="card hidden"></div>
+            <div class="card hidden"></div>
+            <div class="card hidden"></div>
+            <div class="card hidden"></div>
+        </div>
+        <div class="hand community-cards" id="community-cards"></div>
+        <div class="hand" id="player-hand"></div>
+        <button id="exchange-button" onclick="exchangeCards()">교환하기</button>
+        <button id="game-button" onclick="compareHands()">게임!</button>
+        <div id="result"></div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
