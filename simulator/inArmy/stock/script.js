@@ -10,5 +10,10 @@ function calculateRequiredProfit() {
   var remainingAmount = initialInvestment * (1 - lossPercentage / 100);
   var requiredProfitPercentage = (initialInvestment / remainingAmount - 1) * 100;
 
-  document.getElementById('result').innerText = `손해를 본 후 남은 금액으로 원금을 회수하기 위해 필요한 이익률: ${requiredProfitPercentage.toFixed(2)}%`;
+  var resultElement = document.getElementById('result');
+  resultElement.innerHTML = `손해를 본 비율(<span class="highlight">${lossPercentage}%</span>)로 원금을 회수하기 위해 필요한 이익률: <span class="highlight">${requiredProfitPercentage.toFixed(2)}%</span>`;
+}
+
+function setLossPercentage(lossPercentage) {
+  document.getElementById('lossPercentage').value = lossPercentage;
 }
