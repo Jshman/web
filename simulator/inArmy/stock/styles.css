@@ -26,13 +26,15 @@ body {
   display: block;
   text-align: left;
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .input-group input {
-  width: calc(100% - 10px);
+  width: calc(100% - 12px); /* 입력창 너비 조정 */
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box; /* 내부 여백을 포함한 너비 계산 */
 }
 
 #stopLossButtons {
