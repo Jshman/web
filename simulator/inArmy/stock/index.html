@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>손해 복구 이익률 계산기</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="calculator">
+    <h2>손해 복구 이익률 계산기</h2>
+    <div class="input-group">
+      <label for="initialInvestment">원금:</label>
+      <input type="number" id="initialInvestment" step="any" placeholder="원금을 입력하세요">
+    </div>
+    <div class="input-group">
+      <label for="lossPercentage">손해를 본 비율(%):</label>
+      <input type="number" id="lossPercentage" step="any" placeholder="손해를 본 비율을 입력하세요">
+    </div>
+    <button onclick="calculateRequiredProfit()">계산하기</button>
+    <div id="result" class="result"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
