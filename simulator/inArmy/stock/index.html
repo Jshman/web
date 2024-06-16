@@ -17,7 +17,15 @@
       <label for="lossPercentage">손해를 본 비율(%):</label>
       <input type="number" id="lossPercentage" step="any" placeholder="손해를 본 비율을 입력하세요">
     </div>
-    <button onclick="calculateRequiredProfit()">계산하기</button>
+    <div id="stopLossButtons" class="input-group">
+      <p>Stop Loss 비율 선택</p>
+      <button onclick="setLossPercentage(3)">3%</button>
+      <button onclick="setLossPercentage(5)">5%</button>
+      <button onclick="setLossPercentage(7)">7%</button>
+      <button onclick="setLossPercentage(10)">10%</button>
+      <button onclick="setLossPercentage(15)">15%</button>
+    </div>
+    <button class="calculate-button" onclick="calculateRequiredProfit()">계산하기</button>
     <div id="result" class="result"></div>
   </div>
   <script src="script.js"></script>
