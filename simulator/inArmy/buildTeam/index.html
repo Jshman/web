@@ -3,148 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>팀 빌드 시스템</title>
+    <title>팀 빌드</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>팀 빌드 시스템</h1>
-        
-        <form id="add-player-form">
-            <label for="player-name">플레이어 이름:</label>
-            <input type="text" id="player-name" required>
-            
-            <label for="player-rank">플레이어 랭크:</label>
-            <select id="player-rank" required>
-                <option value="">선택하세요</option>
-                <option value="I4">I4</option>
-                <option value="I3">I3</option>
-                <option value="I2">I2</option>
-                <option value="I1">I1</option>
-                <option value="B4">B4</option>
-                <option value="B3">B3</option>
-                <option value="B2">B2</option>
-                <option value="B1">B1</option>
-                <option value="S4">S4</option>
-                <option value="S3">S3</option>
-                <option value="S2">S2</option>
-                <option value="S1">S1</option>
-                <option value="G4">G4</option>
-                <option value="G3">G3</option>
-                <option value="G2">G2</option>
-                <option value="G1">G1</option>
-                <option value="P4">P4</option>
-                <option value="P3">P3</option>
-                <option value="P2">P2</option>
-                <option value="P1">P1</option>
-                <option value="E4">E4</option>
-                <option value="E3">E3</option>
-                <option value="E2">E2</option>
-                <option value="E1">E1</option>
-                <option value="D4">D4</option>
-                <option value="D3">D3</option>
-                <option value="D2">D2</option>
-                <option value="D1">D1</option>
-                <option value="M1">M1</option>
-                <option value="GM1">GM1</option>
-                <option value="C1">C1</option>
-            </select>
-            
-            <fieldset>
-                <legend>포지션:</legend>
-                <div class="position-checkboxes">
-                    <input type="checkbox" id="top-pos" name="primary-pos" value="Top">
-                    <label for="top-pos">Top</label>
-                    
-                    <input type="checkbox" id="jg-pos" name="primary-pos" value="Jungle">
-                    <label for="jg-pos">Jungle</label>
-                    
-                    <input type="checkbox" id="mid-pos" name="primary-pos" value="Mid">
-                    <label for="mid-pos">Mid</label>
-                    
-                    <input type="checkbox" id="adc-pos" name="primary-pos" value="ADC">
-                    <label for="adc-pos">ADC</label>
-                    
-                    <input type="checkbox" id="sup-pos" name="primary-pos" value="Support">
-                    <label for="sup-pos">Support</label>
-                </div>
-            </fieldset>
-            
-            <fieldset>
-                <legend>보조 포지션:</legend>
-                <div class="position-checkboxes">
-                    <input type="checkbox" id="top-sub-pos" name="secondary-pos" value="Top">
-                    <label for="top-sub-pos">Top</label>
-                    
-                    <input type="checkbox" id="jg-sub-pos" name="secondary-pos" value="Jungle">
-                    <label for="jg-sub-pos">Jungle</label>
-                    
-                    <input type="checkbox" id="mid-sub-pos" name="secondary-pos" value="Mid">
-                    <label for="mid-sub-pos">Mid</label>
-                    
-                    <input type="checkbox" id="adc-sub-pos" name="secondary-pos" value="ADC">
-                    <label for="adc-sub-pos">ADC</label>
-                    
-                    <input type="checkbox" id="sup-sub-pos" name="secondary-pos" value="Support">
-                    <label for="sup-sub-pos">Support</label>
-                </div>
-            </fieldset>
-            
-            <button type="submit">플레이어 추가</button>
-        </form>
+        <h1>팀 빌드 결과</h1>
 
         <div class="teams">
-            <div id="team1">
-                <h2>팀 A</h2>
-                <div id="team1-positions" class="team-positions">
-                    <h3>Top</h3>
-                    <!-- 여기에 팀 A의 Top 포지션 플레이어 추가 -->
-                    
-                    <h3>Jungle</h3>
-                    <!-- 여기에 팀 A의 Jungle 포지션 플레이어 추가 -->
-                    
-                    <h3>Mid</h3>
-                    <!-- 여기에 팀 A의 Mid 포지션 플레이어 추가 -->
-                    
-                    <h3>ADC</h3>
-                    <!-- 여기에 팀 A의 ADC 포지션 플레이어 추가 -->
-                    
-                    <h3>Support</h3>
-                    <!-- 여기에 팀 A의 Support 포지션 플레이어 추가 -->
-                </div>
-                <p id="team1-mmr">MMR 평균: 0</p>
+            <div class="team">
+                <h2>Team 1</h2>
+                <div id="team1" class="teamDropZone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <p id="team1MMR"></p>
             </div>
-            
-            <div id="team2">
-                <h2>팀 B</h2>
-                <div id="team2-positions" class="team-positions">
-                    <h3>Top</h3>
-                    <!-- 여기에 팀 B의 Top 포지션 플레이어 추가 -->
-                    
-                    <h3>Jungle</h3>
-                    <!-- 여기에 팀 B의 Jungle 포지션 플레이어 추가 -->
-                    
-                    <h3>Mid</h3>
-                    <!-- 여기에 팀 B의 Mid 포지션 플레이어 추가 -->
-                    
-                    <h3>ADC</h3>
-                    <!-- 여기에 팀 B의 ADC 포지션 플레이어 추가 -->
-                    
-                    <h3>Support</h3>
-                    <!-- 여기에 팀 B의 Support 포지션 플레이어 추가 -->
-                </div>
-                <p id="team2-mmr">MMR 평균: 0</p>
+
+            <div class="team">
+                <h2>Team 2</h2>
+                <div id="team2" class="teamDropZone" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                <p id="team2MMR"></p>
             </div>
         </div>
 
-        <div id="waiting-list">
-            <h2>대기열</h2>
-            <!-- 여기에 추가된 플레이어들 표시 -->
-        </div>
-
-        <button id="team-build-btn">팀 짜기</button>
+        <button onclick="buildTeams()">팀 만들기!</button>
     </div>
 
-    <script src="teamBuildScript.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
