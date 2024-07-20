@@ -74,5 +74,5 @@ button:hover {
     min-height: 50px;
     background-color: #f1f1f1;
     border: 2px dashed #ccc;
-    padding: 10px;
+    padding: 0 0 30px;
 }
