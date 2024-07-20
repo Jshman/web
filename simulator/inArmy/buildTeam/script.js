@@ -207,14 +207,29 @@ function drop(event) {
     const parentId = event.dataTransfer.getData("parentId");
     const targetId = event.target.id;
 
-    if (event.target.className.includes('teamDropZone') && parentId !== targetId) {
+    if (event.target.closest('.teamDropZone') && parentId !== targetId) {
+        // 드롭 대상의 div 요소 생성
         const playerDiv = document.createElement('div');
         playerDiv.textContent = data;
         playerDiv.className = 'draggable';
         playerDiv.draggable = true;
         playerDiv.ondragstart = drag;
-        event.target.appendChild(playerDiv);
 
+        // 드롭 대상이 위치할 인덱스 계산
+        const dropZone = event.target.closest('.teamDropZone');
+        const dropIndex = Array.from(dropZone.children).findIndex(child => {
+            const rect = child.getBoundingClientRect();
+            return event.clientY < rect.top + rect.height / 2;
+        });
+
+        // 새로운 div 요소 추가
+        if (dropIndex === -1) {
+            dropZone.appendChild(playerDiv); // 드롭존 맨 뒤에 추가
+        } else {
+            dropZone.insertBefore(playerDiv, dropZone.children[dropIndex]); // 특정 위치에 추가
+        }
+
+        // 기존 위치에서 해당 팀원 제거
         const parent = document.getElementById(parentId);
         const children = Array.from(parent.children);
         for (let child of children) {
