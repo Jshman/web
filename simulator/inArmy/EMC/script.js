@@ -65,11 +65,11 @@ document.addEventListener('DOMContentLoaded', function() {
         expenses[date].total += amount;
         expenses[date].items.push({ category, amount });
 
-        calendar.getEvents().forEach(event => {
-            if (event.startStr === date) {
-                event.remove();
-            }
-        });
+        // Update or add calendar event
+        const existingEvent = calendar.getEvents().find(event => event.startStr === date);
+        if (existingEvent) {
+            existingEvent.remove();
+        }
 
         calendar.addEvent({
             title: `${expenses[date].total} 원`,
@@ -77,11 +77,13 @@ document.addEventListener('DOMContentLoaded', function() {
             allDay: true
         });
 
+        // Clear and hide form
         dateInput.value = '';
         categoryInput.value = '';
         amountInput.value = '';
         expenseForm.classList.add('hidden');
 
+        // Update details display
         const detailsHTML = `
             <h3>${date} 지출 리스트</h3>
             <ul>
@@ -130,20 +132,21 @@ document.addEventListener('DOMContentLoaded', function() {
             expenses[date].items[index] = { category, amount };
             expenses[date].total += amount;
 
-            // Refresh the calendar event
-            calendar.getEvents().forEach(event => {
-                if (event.startStr === date) {
-                    event.remove();
-                }
-            });
+            // Update or remove calendar event
+            const existingEvent = calendar.getEvents().find(event => event.startStr === date);
+            if (existingEvent) {
+                existingEvent.remove();
+            }
 
-            calendar.addEvent({
-                title: `${expenses[date].total} 원`,
-                start: date,
-                allDay: true
-            });
+            if (expenses[date].total > 0) {
+                calendar.addEvent({
+                    title: `${expenses[date].total} 원`,
+                    start: date,
+                    allDay: true
+                });
+            }
 
-            // Update the details display
+            // Update details display
             const detailsHTML = `
                 <h3>${date} 지출 리스트</h3>
                 <ul>
@@ -154,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             expenseDetails.innerHTML = detailsHTML;
 
-            // Close the edit form
+            // Hide edit form
             editForm.classList.add('hidden');
         }
     });
@@ -167,24 +170,23 @@ document.addEventListener('DOMContentLoaded', function() {
             expenses[date].total -= expenses[date].items[index].amount;
             expenses[date].items.splice(index, 1);
 
-            if (expenses[date].items.length === 0) {
-                delete expenses[date];
-            } else {
-                // Update the total and events
-                calendar.getEvents().forEach(event => {
-                    if (event.startStr === date) {
-                        event.remove();
-                    }
-                });
+            // Update or remove calendar event
+            const existingEvent = calendar.getEvents().find(event => event.startStr === date);
+            if (existingEvent) {
+                existingEvent.remove();
+            }
 
+            if (expenses[date].total > 0) {
                 calendar.addEvent({
                     title: `${expenses[date].total} 원`,
                     start: date,
                     allDay: true
                 });
+            } else {
+                delete expenses[date];
             }
 
-            // Update the details display
+            // Update details display
             const detailsHTML = `
                 <h3>${date} 지출 리스트</h3>
                 <ul>
@@ -195,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             expenseDetails.innerHTML = detailsHTML;
 
-            // Close the edit form
+            // Hide edit form
             editForm.classList.add('hidden');
         }
     });
@@ -204,4 +206,3 @@ document.addEventListener('DOMContentLoaded', function() {
         editForm.classList.add('hidden');
     });
 });
-
