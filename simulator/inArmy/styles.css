@@ -1,0 +1,114 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#calendar {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+#expense-form {
+    max-width: 500px;
+    margin: 20px auto;
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#edit-form {
+    max-width: 500px;
+    margin: 20px auto;
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+}
+
+form button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#add-button {
+    background-color: #28a745; /* 초록색 */
+    color: white;
+}
+
+#add-button:hover {
+    background-color: #218838;
+}
+
+#cancel, #close-edit {
+    background-color: #6c757d; /* 회색 */
+    color: white;
+    margin-left: 10px;
+}
+
+#cancel:hover, #close-edit:hover {
+    background-color: #5a6268;
+}
+
+#update-button {
+    background-color: #007bff; /* 파란색 */
+    color: white;
+    margin-left: 10px;
+}
+
+#update-button:hover {
+    background-color: #0056b3;
+}
+
+#delete-button {
+    background-color: #dc3545; /* 빨간색 */
+    color: white;
+    margin-left: 10px;
+}
+
+#delete-button:hover {
+    background-color: #c82333;
+}
+
+#expense-details {
+    margin-top: 20px;
+}
+
+#expense-details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#expense-details li {
+    margin-bottom: 5px;
+    cursor: pointer;
+    color: #007bff;
+}
+
+#expense-details li:hover {
+    text-decoration: underline;
+}
+
