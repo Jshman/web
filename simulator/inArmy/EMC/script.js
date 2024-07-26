@@ -15,8 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const updateButton = document.getElementById('update-button');
     const deleteButton = document.getElementById('delete-button');
     const closeEditButton = document.getElementById('close-edit');
+    const saveButton = document.getElementById('save-button');
+    const loadButton = document.getElementById('load-button');
+    const initialScreen = document.getElementById('initial-screen'); // 초기 화면 요소 추가
 
-    const expenses = {};
+    let expenses = {};
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -45,6 +48,43 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     calendar.render();
+
+    function updateCalendar() {
+        calendar.getEvents().forEach(event => event.remove());
+        Object.keys(expenses).forEach(date => {
+            calendar.addEvent({
+                title: `${expenses[date].total} 원`,
+                start: date,
+                allDay: true
+            });
+        });
+        checkInitialScreen();
+    }
+
+    function updateExpenseDetails() {
+        const date = dateInput.value;
+        if (expenses[date]) {
+            const detailsHTML = `
+                <h3>${date} 지출 리스트</h3>
+                <ul>
+                    ${expenses[date].items.map((item, index) => 
+                        `<li data-index="${index}">${item.category}: ${item.amount} 원</li>`
+                    ).join('')}
+                </ul>
+            `;
+            expenseDetails.innerHTML = detailsHTML;
+        } else {
+            expenseDetails.innerHTML = '<p>지출 내역이 없습니다.</p>';
+        }
+    }
+
+    function checkInitialScreen() {
+        if (Object.keys(expenses).length === 0) {
+            initialScreen.classList.remove('hidden');
+        } else {
+            initialScreen.classList.add('hidden');
+        }
+    }
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -84,15 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
         expenseForm.classList.add('hidden');
 
         // Update details display
-        const detailsHTML = `
-            <h3>${date} 지출 리스트</h3>
-            <ul>
-                ${expenses[date].items.map((item, index) => 
-                    `<li data-index="${index}">${item.category}: ${item.amount} 원</li>`
-                ).join('')}
-            </ul>
-        `;
-        expenseDetails.innerHTML = detailsHTML;
+        updateExpenseDetails();
     });
 
     cancelButton.addEventListener('click', function() {
@@ -147,15 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // Update details display
-            const detailsHTML = `
-                <h3>${date} 지출 리스트</h3>
-                <ul>
-                    ${expenses[date].items.map((item, index) => 
-                        `<li data-index="${index}">${item.category}: ${item.amount} 원</li>`
-                    ).join('')}
-                </ul>
-            `;
-            expenseDetails.innerHTML = detailsHTML;
+            updateExpenseDetails();
 
             // Hide edit form
             editForm.classList.add('hidden');
@@ -187,15 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // Update details display
-            const detailsHTML = `
-                <h3>${date} 지출 리스트</h3>
-                <ul>
-                    ${expenses[date] ? expenses[date].items.map((item, index) => 
-                        `<li data-index="${index}">${item.category}: ${item.amount} 원</li>`
-                    ).join('') : '<p>지출 내역이 없습니다.</p>'}
-                </ul>
-            `;
-            expenseDetails.innerHTML = detailsHTML;
+            updateExpenseDetails();
 
             // Hide edit form
             editForm.classList.add('hidden');
@@ -205,4 +221,32 @@ document.addEventListener('DOMContentLoaded', function() {
     closeEditButton.addEventListener('click', function() {
         editForm.classList.add('hidden');
     });
+
+    // Save to file
+    saveButton.addEventListener('click', function() {
+        const blob = new Blob([JSON.stringify(expenses)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'expenses.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    });
+
+    // Load from file
+    loadButton.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                expenses = JSON.parse(e.target.result);
+                updateCalendar();
+                updateExpenseDetails();
+            };
+            reader.readAsText(file);
+        }
+    });
+
+    // Initialize the screen
+    checkInitialScreen();
 });
