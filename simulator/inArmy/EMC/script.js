@@ -250,3 +250,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize the screen
     checkInitialScreen();
 });
+
