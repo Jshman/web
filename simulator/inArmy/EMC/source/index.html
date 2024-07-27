@@ -4,46 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>지출 캘린더</title>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css'>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.2/index.global.min.js"></script>
-    <!-- FullCalendar JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
 </head>
 <body>
-    <div id="calendar"></div>
-    <div id="initial-screen" class="hidden">
-        <h2>지출 기록이 없습니다.</h2>
-        <p>지출을 추가하려면 날짜를 클릭하여 시작하세요.</p>
+    <div id="initial-screen">
+        <h1>지출 캘린더</h1>
+        <p>날짜를 클릭하여 지출 내역을 추가하세요.</p>
     </div>
+    <div id="calendar"></div>
+
+    <div id="monthly-total" class="hidden">
+        <h2>이번 달 지출 총액: <span id="monthly-total-amount">0</span> 원</h2>
+        <p>1주차 지출 총액: <span id="week1-total">0</span> 원</p>
+        <p>2주차 지출 총액: <span id="week2-total">0</span> 원</p>
+        <p>3주차 지출 총액: <span id="week3-total">0</span> 원</p>
+        <p>4주차 지출 총액: <span id="week4-total">0</span> 원</p>
+        <p>5주차 지출 총액: <span id="week5-total">0</span> 원</p>
+        <p>6주차 지출 총액: <span id="week6-total">0</span> 원</p>
+    </div>
+
     <div id="expense-form" class="hidden">
         <form id="form">
             <label for="date">날짜:</label>
-            <input type="date" id="date" name="date" required>
+            <input type="text" id="date" readonly>
             <label for="category">카테고리:</label>
-            <input type="text" id="category" name="category" required>
+            <select id="category">
+                <option value="유흥">유흥</option>
+                <option value="도서">도서</option>
+                <option value="게임">게임</option>
+                <option value="의류">의류</option>
+                <option value="화장품">화장품</option>
+                <option value="식자재">식자재</option>
+                <option value="교통비">교통비</option>
+                <option value="외식">외식</option>
+                <option value="전자제품">전자제품</option>
+                <option value="의료비">의료비</option>
+            </select>
             <label for="amount">금액:</label>
-            <input type="number" id="amount" name="amount" required>
+            <input type="number" id="amount">
             <button type="submit">추가</button>
             <button type="button" id="cancel">취소</button>
         </form>
+        <div id="expense-details"></div>
     </div>
-    <div id="expense-details"></div>
-    <div id="edit-form" class="hidden">
-        <label for="edit-category">카테고리:</label>
-        <input type="text" id="edit-category">
-        <label for="edit-amount">금액:</label>
-        <input type="number" id="edit-amount">
-        <input type="hidden" id="edit-index">
-        <button id="update-button">수정</button>
-        <button id="delete-button">삭제</button>
-        <button id="close-edit">닫기</button>
-    </div>
-    <button id="save-button">데이터 저장</button>
-    <input type="file" id="load-button" accept=".json" style="display: none;">
-    <label for="load-button">데이터 불러오기</label>
 
-    <!-- 사용자 정의 스크립트 -->
+    <div id="edit-form" class="hidden">
+        <form>
+            <label for="edit-category">카테고리:</label>
+            <input type="text" id="edit-category">
+            <label for="edit-amount">금액:</label>
+            <input type="number" id="edit-amount">
+            <input type="hidden" id="edit-index">
+            <button id="update-button">수정</button>
+            <button id="delete-button">삭제</button>
+            <button type="button" id="close-edit">닫기</button>
+        </form>
+    </div>
+
+    <button id="save-button">저장</button>
+    <input type="file" id="load-button">
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js'></script>
+    <script src='https://momentjs.com/downloads/moment.min.js'></script>
     <script src="script.js"></script>
 </body>
 </html>
