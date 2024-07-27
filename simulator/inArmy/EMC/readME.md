@@ -38,4 +38,4 @@
 
 - 모바일에서도 이용가능하지만 json 파일의 경로를 찾기 힘들것 같다.
 
-<p><a href="https://jshman.github.io/web/simulator/inArmy/EMC/index.html" target="_blank" rel="noopener noreferrer">지출 캘린더</a></p>
+<p><a href="https://jshman.github.io/web/simulator/inArmy/EMC/source/index.html" target="_blank" rel="noopener noreferrer">지출 캘린더</a></p>
