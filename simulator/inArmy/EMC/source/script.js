@@ -1,5 +1,5 @@
-// script.js
 document.addEventListener('DOMContentLoaded', function() {
+    // DOM 요소 선택
     const calendarEl = document.getElementById('calendar');
     const form = document.getElementById('form');
     const expenseForm = document.getElementById('expense-form');
@@ -17,12 +17,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeEditButton = document.getElementById('close-edit');
     const saveButton = document.getElementById('save-button');
     const loadButton = document.getElementById('load-button');
-    const initialScreen = document.getElementById('initial-screen'); // 초기 화면 요소 추가
+    const initialScreen = document.getElementById('initial-screen');
+    const monthlyTotalEl = document.getElementById('monthly-total');
+    const monthlyTotalAmountEl = document.getElementById('monthly-total-amount');
+    const weekTotalEls = [
+        document.getElementById('week1-total'),
+        document.getElementById('week2-total'),
+        document.getElementById('week3-total'),
+        document.getElementById('week4-total'),
+        document.getElementById('week5-total'),
+        document.getElementById('week6-total')
+    ];
 
+    // 모든 지출을 저장할 객체
     let expenses = {};
 
+    // FullCalendar 초기화
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
+        // 날짜 클릭 이벤트 핸들러
         dateClick: function(info) {
             dateInput.value = info.dateStr;
             if (expenses[info.dateStr]) {
@@ -40,15 +53,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             expenseForm.classList.remove('hidden');
         },
+        // 지출 데이터로부터 이벤트 생성
         events: Object.keys(expenses).map(date => ({
             title: `${expenses[date].total} 원`,
             start: date,
             allDay: true
-        }))
+        })),
+        // 캘린더 날짜가 설정/변경될 때 핸들러
+        datesSet: function() {
+            updateMonthlyTotal();
+        }
     });
 
     calendar.render();
 
+    // 캘린더 이벤트 업데이트 함수
     function updateCalendar() {
         calendar.getEvents().forEach(event => event.remove());
         Object.keys(expenses).forEach(date => {
@@ -59,8 +78,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         checkInitialScreen();
+        updateMonthlyTotal();
     }
 
+    // 지출 세부사항 표시 업데이트 함수
     function updateExpenseDetails() {
         const date = dateInput.value;
         if (expenses[date]) {
@@ -78,14 +99,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // 월별 및 주별 총액 업데이트 함수
+    function updateMonthlyTotal() {
+        const currentMonth = moment(calendar.getDate()).format('YYYY-MM');
+        let monthlyTotal = 0;
+        let weeklyTotals = [0, 0, 0, 0, 0, 0];
+
+        Object.keys(expenses).forEach(date => {
+            if (date.startsWith(currentMonth)) {
+                const weekNumber = Math.floor((new Date(date).getDate() - 1) / 7);
+                monthlyTotal += expenses[date].total;
+                weeklyTotals[weekNumber] += expenses[date].total;
+            }
+        });
+
+        monthlyTotalAmountEl.textContent = monthlyTotal;
+        weeklyTotals.forEach((total, index) => {
+            weekTotalEls[index].textContent = total;
+        });
+
+        monthlyTotalEl.classList.remove('hidden');
+    }
+
+    // 초기 화면 가시성 확인 및 업데이트 함수
     function checkInitialScreen() {
         if (Object.keys(expenses).length === 0) {
             initialScreen.classList.remove('hidden');
+            monthlyTotalEl.classList.add('hidden');
         } else {
             initialScreen.classList.add('hidden');
+            updateMonthlyTotal();
         }
     }
 
+    // 폼 제출 이벤트 리스너
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -105,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
         expenses[date].total += amount;
         expenses[date].items.push({ category, amount });
 
-        // Update or add calendar event
+        // 캘린더 이벤트 업데이트 또는 추가
         const existingEvent = calendar.getEvents().find(event => event.startStr === date);
         if (existingEvent) {
             existingEvent.remove();
@@ -117,16 +164,18 @@ document.addEventListener('DOMContentLoaded', function() {
             allDay: true
         });
 
-        // Clear and hide form
+        // 폼 초기화 및 숨기기
         dateInput.value = '';
         categoryInput.value = '';
         amountInput.value = '';
         expenseForm.classList.add('hidden');
 
-        // Update details display
+        // 세부사항 표시 업데이트
         updateExpenseDetails();
+        updateCalendar();
     });
 
+    // 취소 버튼 이벤트 리스너
     cancelButton.addEventListener('click', function() {
         dateInput.value = '';
         categoryInput.value = '';
@@ -135,6 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
         expenseDetails.innerHTML = '';
     });
 
+    // 지출 세부사항 클릭 이벤트 리스너
     expenseDetails.addEventListener('click', function(e) {
         const index = e.target.getAttribute('data-index');
         if (index !== null) {
@@ -147,107 +197,82 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    updateButton.addEventListener('click', function() {
+    // 업데이트 버튼 이벤트 리스너
+    updateButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
         const date = dateInput.value;
-        const index = parseInt(editIndexInput.value, 10);
         const category = editCategoryInput.value;
         const amount = parseFloat(editAmountInput.value);
+        const index = parseInt(editIndexInput.value);
 
-        if (!date || isNaN(amount) || amount <= 0) {
+        if (!date || isNaN(amount) || amount <= 0 || isNaN(index)) {
             alert('올바른 정보를 입력하세요.');
             return;
         }
 
-        if (expenses[date]) {
-            // Update the item
-            expenses[date].total -= expenses[date].items[index].amount;
-            expenses[date].items[index] = { category, amount };
-            expenses[date].total += amount;
+        const oldAmount = expenses[date].items[index].amount;
+        expenses[date].total = expenses[date].total - oldAmount + amount;
+        expenses[date].items[index] = { category, amount };
 
-            // Update or remove calendar event
-            const existingEvent = calendar.getEvents().find(event => event.startStr === date);
-            if (existingEvent) {
-                existingEvent.remove();
-            }
-
-            if (expenses[date].total > 0) {
-                calendar.addEvent({
-                    title: `${expenses[date].total} 원`,
-                    start: date,
-                    allDay: true
-                });
-            }
-
-            // Update details display
-            updateExpenseDetails();
-
-            // Hide edit form
-            editForm.classList.add('hidden');
-        }
+        editForm.classList.add('hidden');
+        updateExpenseDetails();
+        updateCalendar();
     });
 
-    deleteButton.addEventListener('click', function() {
+    // 삭제 버튼 이벤트 리스너
+    deleteButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
         const date = dateInput.value;
-        const index = parseInt(editIndexInput.value, 10);
+        const index = parseInt(editIndexInput.value);
 
-        if (expenses[date]) {
-            expenses[date].total -= expenses[date].items[index].amount;
-            expenses[date].items.splice(index, 1);
-
-            // Update or remove calendar event
-            const existingEvent = calendar.getEvents().find(event => event.startStr === date);
-            if (existingEvent) {
-                existingEvent.remove();
-            }
-
-            if (expenses[date].total > 0) {
-                calendar.addEvent({
-                    title: `${expenses[date].total} 원`,
-                    start: date,
-                    allDay: true
-                });
-            } else {
-                delete expenses[date];
-            }
-
-            // Update details display
-            updateExpenseDetails();
-
-            // Hide edit form
-            editForm.classList.add('hidden');
+        if (isNaN(index)) {
+            alert('잘못된 인덱스입니다.');
+            return;
         }
+
+        const oldAmount = expenses[date].items[index].amount;
+        expenses[date].total -= oldAmount;
+        expenses[date].items.splice(index, 1);
+
+        if (expenses[date].items.length === 0) {
+            delete expenses[date];
+        }
+
+        editForm.classList.add('hidden');
+        updateExpenseDetails();
+        updateCalendar();
     });
 
+    // 편집 폼 닫기 버튼 이벤트 리스너
     closeEditButton.addEventListener('click', function() {
         editForm.classList.add('hidden');
     });
 
-    // Save to file
+    // 저장 버튼 이벤트 리스너
     saveButton.addEventListener('click', function() {
-        const blob = new Blob([JSON.stringify(expenses)], { type: 'application/json' });
+        const dataStr = JSON.stringify(expenses);
+        const blob = new Blob([dataStr], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
         a.download = 'expenses.json';
         a.click();
-        URL.revokeObjectURL(url);
     });
 
-    // Load from file
-    loadButton.addEventListener('change', function(event) {
-        const file = event.target.files[0];
+    // 로드 버튼 이벤트 리스너
+    loadButton.addEventListener('change', function(e) {
+        const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 expenses = JSON.parse(e.target.result);
                 updateCalendar();
-                updateExpenseDetails();
             };
             reader.readAsText(file);
         }
     });
 
-    // Initialize the screen
     checkInitialScreen();
 });
-
