@@ -1,7 +1,7 @@
 # 프로젝트 개요
 
 ## 프로젝트 이름
-<p><a href="https://jshman.github.io/web/simulator/inArmy/gradeSudoku/index.html" target="_blank" rel="noopener noreferrer">스도쿠 채점기</a></p>
+<p><a href="https://jshman.github.io/web/simulator/inArmy/gradeSudoku/source/index.html" target="_blank" rel="noopener noreferrer">스도쿠 채점기</a></p>
 
 ## 프로젝트 개발 기간
 24/05 언젠가부터 짬날때마다 해서 24/06/04
